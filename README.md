@@ -1,6 +1,39 @@
 # Service Registry Eureka Server
-### Docker Edition
 
-- Checkout configuration repo for setup (localhost) : [here](https://github.com/dev117uday/configurations/blob/main/service-registry/local-config.md)
+## Docker Edition Setup
 
-**Checkout `heroku` branch for heroku deployment**
+### Create directories
+
+```bash
+mkdir src/main/resources
+touch src/main/resources/application.yml
+touch src/main/resources/application.properties
+```
+
+### Create `application.yml`
+
+```yml
+server:
+  port: 8761
+
+eureka:
+  client:
+    fetchRegistry: 'false'
+    registerWithEureka: 'false'
+```
+
+### or Create `application.properties`
+
+```properties
+server.port=8761
+eureka.client.fetchRegistry=false
+eureka.client.registerWithEureka=false
+```
+
+### Build and run with Docker
+
+```bash
+"./mvnw" package -f "pom.xml"
+sudo docker build -f Dockerfile -t my-eureka-server .
+sudo docker run -d --name eureka -p 8761:8761 my-eureka-server
+```
